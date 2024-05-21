@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+.geolocation-marker {
+  background-color: #3B9DDD;
+  border-radius: 50%;
+  border: 1px solid #2F7EB1;
+  width: 11px;
+  height: 11px;
+}
+.map-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}
+.map-overlay button {
+  margin: 3px;
+}
