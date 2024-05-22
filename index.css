@@ -8,13 +8,6 @@ body {
   bottom: 0;
   width: 100%;
 }
-.geolocation-marker {
-  background-color: #3B9DDD;
-  border-radius: 50%;
-  border: 1px solid #2F7EB1;
-  width: 11px;
-  height: 11px;
-}
 .map-overlay {
   position: absolute;
   top: 10px;

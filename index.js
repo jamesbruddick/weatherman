@@ -4,8 +4,17 @@ let map = new mapboxgl.Map({
 	container: 'map',
 	style: 'mapbox://styles/jamesbruddick/clwcovsc701u601oxhzl6fmv2',
 	center: [-98.5795, 39.8281],
-	zoom: 5
+	zoom: 4
 });
+
+map.addControl(new mapboxgl.NavigationControl());
+
+map.addControl(new mapboxgl.GeolocateControl({
+	fitBoundsOptions: {
+		maxZoom: 5
+	},
+	trackUserLocation: true
+}));
 
 map.on('load', () => {
 	map.addSource('spc-outlook-day1-cat', {
@@ -156,23 +165,5 @@ map.on('load', () => {
 				map.setLayoutProperty(layer.id, 'visibility', visibility);
 			}
 		});
-	}
-
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(position => {
-			let userLocation = [position.coords.longitude, position.coords.latitude];
-	
-			map.setCenter(userLocation);
-			map.setZoom(8);
-	
-			let userLocationMarker = document.createElement('div');
-			userLocationMarker.className = 'geolocation-marker';
-	
-			new mapboxgl.Marker(userLocationMarker).setLngLat(userLocation).addTo(map);
-		}, error => {
-			console.error('Error occurred while retrieving geolocation:', error);
-		});
-	} else {
-		console.error('Geolocation is not supported by this browser.');
 	}
 });
