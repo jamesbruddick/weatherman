@@ -4,18 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Weatherman</title>
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/3.3.0/mapbox-gl.css" integrity="sha512-K54V3ai9CHFBUpp+fo4ekZ89sMvBpfAVl+WSP4FcThI3DkrO2lc5Hl9utLzuuJL83OxgMq72YD9gTIYvh8jhnA==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
-    <div id="map"></div>
-    <div class='map-overlay'>
-      <button id='toggleSPCOutlookDay1Cat'>SPC Day 1 Categorical Outlook</button>
-      <button id='toggleSPCOutlookDay1Torn'>SPC Day 1 Tornado Outlook</button>
-      <button id='toggleSPCOutlookDay1Hail'>SPC Day 1 Hail Outlook</button>
-      <button id='toggleSPCOutlookDay1Wind'>SPC Day 1 Wind Outlook</button>
+    <button id="mapmenu-open" class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#mapmenu">
+      <i class="bi bi-list"></i>
+    </button>
+    <div id="mapmenu" class="offcanvas offcanvas-start" tabindex="-1">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title fw-bold">Weatherman</h5>
+        <button id="mapmenu-close" class="btn" type="button" data-bs-dismiss="offcanvas">
+          <i class="bi bi-list"></i>
+        </button>
+      </div>
+      <div class="offcanvas-body">
+        <button id="toggle-spc-outlook-day1-cat" class="btn" type="button">SPC Day 1 Categorical Outlook</button>
+        <button id="toggle-spc-outlook-day1-torn" class="btn" type="button">SPC Day 1 Tornado Outlook</button>
+        <button id="toggle-spc-outlook-day1-hail" class="btn" type="button">SPC Day 1 Hail Outlook</button>
+        <button id="toggle-spc-outlook-day1-wind" class="btn" type="button">SPC Day 1 Wind Outlook</button>
+      </div>
     </div>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+    <div id="map"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/3.3.0/mapbox-gl.js" integrity="sha512-722SZtnABPJMSe0m2M0geGo/RNKESjWiIKpdl2WPRq5mPplqzcfDpS3R3o+RsrBIOR7FOzShEBb3gHA+f1SpoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="index.js"></script>
   </body>
 </html>

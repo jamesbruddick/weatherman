@@ -1,169 +1,96 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoiamFtZXNicnVkZGljayIsImEiOiJjbHdmdGVqazMxemxlMnFudHJnam9oNDFuIn0.WVMzNUUgxKOTK56tUzGLKg';
+const mapMenu = document.getElementById('mapmenu');
+const mapContainer = document.getElementById('map');
+
+function adjustMapSize() {
+	const menuWidth = mapMenu.classList.contains('show') ? mapMenu.offsetWidth : 0;
+	mapContainer.style.left = menuWidth + 'px';
+	mapContainer.style.width = `calc(100% - ${menuWidth}px)`;
+	map.resize();
+}
+
+['shown.bs.offcanvas', 'hidden.bs.offcanvas'].forEach(event => {
+	mapMenu.addEventListener(event, adjustMapSize);
+});
 
 let map = new mapboxgl.Map({
+	accessToken: 'pk.eyJ1IjoiamFtZXNicnVkZGljayIsImEiOiJjbHdmdGVqazMxemxlMnFudHJnam9oNDFuIn0.WVMzNUUgxKOTK56tUzGLKg',
 	container: 'map',
 	style: 'mapbox://styles/jamesbruddick/clwcovsc701u601oxhzl6fmv2',
 	center: [-98.5795, 39.8281],
 	zoom: 4
 });
 
-map.addControl(new mapboxgl.NavigationControl());
+map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
 map.addControl(new mapboxgl.GeolocateControl({
-	fitBoundsOptions: {
-		maxZoom: 5
-	},
+	fitBoundsOptions: { maxZoom: 6 },
+	showAccuracyCircle: false,
 	trackUserLocation: true
-}));
+}), 'bottom-right');
 
 map.on('load', () => {
-	map.addSource('spc-outlook-day1-cat', {
-		type: 'geojson',
-		data: 'https://www.spc.noaa.gov/products/outlook/day1otlk_cat.nolyr.geojson'
-	});
+	const layerInfo = [
+		{ id: 'spc-outlook-day1-cat', url: 'https://www.spc.noaa.gov/products/outlook/day1otlk_cat.nolyr.geojson', visible: true },
+		{ id: 'spc-outlook-day1-torn', url: 'https://www.spc.noaa.gov/products/outlook/day1otlk_torn.nolyr.geojson', visible: false },
+		{ id: 'spc-outlook-day1-hail', url: 'https://www.spc.noaa.gov/products/outlook/day1otlk_hail.nolyr.geojson', visible: false },
+		{ id: 'spc-outlook-day1-wind', url: 'https://www.spc.noaa.gov/products/outlook/day1otlk_wind.nolyr.geojson', visible: false }
+	];
 
-	map.addLayer({
-		id: 'spc-outlook-day1-cat-line-layer',
-		source: 'spc-outlook-day1-cat',
-		type: 'line',
-		paint: {
-			'line-color': ['get', 'stroke']
-		},
-		layout: {
-			visibility: 'visible'
-		}
-	});
+	layerInfo.forEach(info => {
+		map.addSource(info.id, { type: 'geojson', data: info.url });
 
-	map.addLayer({
-		id: 'spc-outlook-day1-cat-fill-layer',
-		source: 'spc-outlook-day1-cat',
-		type: 'fill',
-		paint: {
-			'fill-color': ['get', 'fill'],
-			'fill-opacity': 0.2
-		},
-		layout: {
-			visibility: 'visible'
-		}
-	});
+		const lineLayerId = `${info.id}-line-layer`;
+		const fillLayerId = `${info.id}-fill-layer`;
+		const labelLayerId = `${info.id}-label-layer`;
 
-	map.addSource('spc-outlook-day1-torn', {
-		'type': 'geojson',
-		'data': 'https://www.spc.noaa.gov/products/outlook/day1otlk_torn.nolyr.geojson'
-	});
+		map.addLayer({
+			id: lineLayerId,
+			source: info.id,
+			type: 'line',
+			paint: { 'line-color': ['get', 'stroke'] },
+			layout: { visibility: info.visible ? 'visible' : 'none' }
+		});
 
-	map.addLayer({
-		'id': 'spc-outlook-day1-torn-line-layer',
-		'source': 'spc-outlook-day1-torn',
-		'type': 'line',
-		'paint': {
-			'line-color': ['get', 'stroke']
-		},
-		layout: {
-			visibility: 'none'
-		}
-	});
+		map.addLayer({
+			id: fillLayerId,
+			source: info.id,
+			type: 'fill',
+			paint: { 'fill-color': ['get', 'fill'], 'fill-opacity': 0.2 },
+			layout: { visibility: info.visible ? 'visible' : 'none' }
+		});
 
-	map.addLayer({
-		'id': 'spc-outlook-day1-torn-fill-layer',
-		'source': 'spc-outlook-day1-torn',
-		'type': 'fill',
-		'paint': {
-			'fill-color': ['get', 'fill'],
-			'fill-opacity': 0.2
-		},
-		layout: {
-			visibility: 'none'
-		}
-	});
-
-	map.addSource('spc-outlook-day1-hail', {
-		'type': 'geojson',
-		'data': 'https://www.spc.noaa.gov/products/outlook/day1otlk_hail.nolyr.geojson'
-	});
-
-	map.addLayer({
-		'id': 'spc-outlook-day1-hail-line-layer',
-		'source': 'spc-outlook-day1-hail',
-		'type': 'line',
-		'paint': {
-			'line-color': ['get', 'stroke']
-		},
-		layout: {
-			visibility: 'none'
-		}
-	});
-
-	map.addLayer({
-		'id': 'spc-outlook-day1-hail-fill-layer',
-		'source': 'spc-outlook-day1-hail',
-		'type': 'fill',
-		'paint': {
-			'fill-color': ['get', 'fill'],
-			'fill-opacity': 0.2
-		},
-		layout: {
-			visibility: 'none'
-		}
-	});
-
-	map.addSource('spc-outlook-day1-wind', {
-		'type': 'geojson',
-		'data': 'https://www.spc.noaa.gov/products/outlook/day1otlk_wind.nolyr.geojson'
-	});
-
-	map.addLayer({
-		'id': 'spc-outlook-day1-wind-line-layer',
-		'source': 'spc-outlook-day1-wind',
-		'type': 'line',
-		'paint': {
-			'line-color': ['get', 'stroke']
-		},
-		layout: {
-			visibility: 'none'
-		}
-	});
-
-	map.addLayer({
-		'id': 'spc-outlook-day1-wind-fill-layer',
-		'source': 'spc-outlook-day1-wind',
-		'type': 'fill',
-		'paint': {
-			'fill-color': ['get', 'fill'],
-			'fill-opacity': 0.2
-		},
-		layout: {
-			visibility: 'none'
-		}
-	});
-
-	document.getElementById('toggleSPCOutlookDay1Cat').addEventListener('click', () => {
-		toggleLayerVisibility(['spc-outlook-day1-cat-line-layer', 'spc-outlook-day1-cat-fill-layer']);
-	});
-
-	document.getElementById('toggleSPCOutlookDay1Torn').addEventListener('click', () => {
-		toggleLayerVisibility(['spc-outlook-day1-torn-line-layer', 'spc-outlook-day1-torn-fill-layer']);
-	});
-
-	document.getElementById('toggleSPCOutlookDay1Hail').addEventListener('click', () => {
-		toggleLayerVisibility(['spc-outlook-day1-hail-line-layer', 'spc-outlook-day1-hail-fill-layer']);
-	});
-
-	document.getElementById('toggleSPCOutlookDay1Wind').addEventListener('click', () => {
-		toggleLayerVisibility(['spc-outlook-day1-wind-line-layer', 'spc-outlook-day1-wind-fill-layer']);
-	});
-
-	function toggleLayerVisibility(layerIds) {
-		map.getStyle().layers.forEach(layer => {
-			if (layer.id.startsWith('spc-outlook-day1')) {
-				let visibility = 'none';
-
-				if (layerIds.includes(layer.id)) {
-					visibility = 'visible';
-				}
-
-				map.setLayoutProperty(layer.id, 'visibility', visibility);
+		map.addLayer({
+			id: labelLayerId,
+			source: info.id,
+			type: 'symbol',
+			paint: { 'text-color': '#ffffff' },
+			layout: {
+				'symbol-placement': 'line',
+				'text-field': ['get', 'LABEL2'],
+				'text-keep-upright': false,
+				'text-max-angle': 0,
+				'text-offset': [0, 1],
+				'text-size': 16,
+				'visibility': info.visible ? 'visible' : 'none'
 			}
 		});
-	}
+
+		document.getElementById(`toggle-${info.id}`).addEventListener('click', () => {
+			toggleLayerVisibility([lineLayerId, fillLayerId, labelLayerId]);
+		});
+	});
 });
+
+function toggleLayerVisibility(layerIds) {
+	if (!map.loaded()) {
+		console.error('Map is not yet loaded.');
+		return;
+	}
+
+	map.getStyle().layers.forEach(layer => {
+		if (layer.id.startsWith('spc-outlook-day1')) {
+			const visibility = layerIds.includes(layer.id) ? 'visible' : 'none';
+			map.setLayoutProperty(layer.id, 'visibility', visibility);
+		}
+	});
+}
