@@ -9,8 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		accessToken: 'pk.eyJ1IjoiamFtZXNicnVkZGljayIsImEiOiJjbHdmdGVqazMxemxlMnFudHJnam9oNDFuIn0.WVMzNUUgxKOTK56tUzGLKg',
 		container: 'map',
 		style: 'mapbox://styles/jamesbruddick/clwcovsc701u601oxhzl6fmv2',
-		center: [-98.5795, 39.8281],
-		zoom: 4.5
+		center: [-98, 38],
+		minZoom: 5,
+		maxZoom: 15,
+		pitchWithRotate: false
 	});
 
 	map.addControl(new mapboxgl.GeolocateControl({
@@ -56,17 +58,24 @@ document.addEventListener('DOMContentLoaded', () => {
 				id: labelLayerId,
 				source: info.id,
 				type: 'symbol',
-				paint: { 'text-color': '#ffffff' },
+				paint: {
+					'text-color': '#ffffff',
+					'text-halo-color': '#000000',
+					'text-halo-width': 1
+				},
 				layout: {
 					'symbol-placement': 'line',
 					'text-field': ['get', 'LABEL2'],
 					'text-keep-upright': false,
-					'text-max-angle': 0,
+					'text-max-angle': 10,
 					'text-offset': [0, 1],
 					'text-size': 16,
-					'visibility': info.visible ? 'visible' : 'none'
+					'text-font': ['Open Sans Bold'],
+					'text-letter-spacing': 0.05,
+					visibility: info.visible ? 'visible' : 'none'
 				}
 			});
+			
 
 			document.getElementById(`toggle-${info.id}`).addEventListener('click', () => {
 				toggleLayerVisibility([lineLayerId, fillLayerId, labelLayerId]);
