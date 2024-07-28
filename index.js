@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	let map = new mapboxgl.Map({
 		accessToken: 'pk.eyJ1IjoiamFtZXNicnVkZGljayIsImEiOiJjbHdmdGVqazMxemxlMnFudHJnam9oNDFuIn0.WVMzNUUgxKOTK56tUzGLKg',
 		container: 'map',
-		style: 'mapbox://styles/jamesbruddick/clwcovsc701u601oxhzl6fmv2',
+		style: 'mapbox://styles/jamesbruddick/clz5xgdlq032q01p9honj7mm6',
 		center: [-98, 38],
-		minZoom: 5,
+		minZoom: window.innerWidth <= 992 ? 3 : 4,
 		maxZoom: 15,
 		pitchWithRotate: false
 	});
