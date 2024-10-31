@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	const mapMenu = document.getElementById('mapmenu');
 	const mapMenuOpen = document.querySelector('#mapmenu-open');
 
-	mapMenu.addEventListener('shown.bs.offcanvas', () => mapMenuOpen.style.visibility = 'hidden');
-	mapMenu.addEventListener('hidden.bs.offcanvas', () => mapMenuOpen.style.visibility = 'visible');
+	mapMenu.addEventListener('shown.bs.offcanvas', () => (mapMenuOpen.style.visibility = 'hidden'));
+	mapMenu.addEventListener('hidden.bs.offcanvas', () => (mapMenuOpen.style.visibility = 'visible'));
 
 	let map = new mapboxgl.Map({
 		accessToken: 'pk.eyJ1IjoiamFtZXNicnVkZGljayIsImEiOiJjbHdmdGVqazMxemxlMnFudHJnam9oNDFuIn0.WVMzNUUgxKOTK56tUzGLKg',
@@ -15,11 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		pitchWithRotate: false
 	});
 
-	map.addControl(new mapboxgl.GeolocateControl({
-		fitBoundsOptions: { maxZoom: 6 },
-		showAccuracyCircle: false,
-		trackUserLocation: true
-	}), 'bottom-right');
+	map.addControl(
+		new mapboxgl.GeolocateControl({
+			fitBoundsOptions: { maxZoom: 6 },
+			showAccuracyCircle: false,
+			trackUserLocation: true
+		}),
+		'bottom-right'
+	);
 
 	map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
@@ -28,10 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
 			{ id: 'spc-outlook-day1-cat', url: 'https://www.spc.noaa.gov/products/outlook/day1otlk_cat.nolyr.geojson', visible: true },
 			{ id: 'spc-outlook-day1-torn', url: 'https://www.spc.noaa.gov/products/outlook/day1otlk_torn.nolyr.geojson', visible: false },
 			{ id: 'spc-outlook-day1-hail', url: 'https://www.spc.noaa.gov/products/outlook/day1otlk_hail.nolyr.geojson', visible: false },
-			{ id: 'spc-outlook-day1-wind', url: 'https://www.spc.noaa.gov/products/outlook/day1otlk_wind.nolyr.geojson', visible: false }
+			{ id: 'spc-outlook-day1-wind', url: 'https://www.spc.noaa.gov/products/outlook/day1otlk_wind.nolyr.geojson', visible: false },
+			{ id: 'spc-outlook-day2-cat', url: 'https://www.spc.noaa.gov/products/outlook/day2otlk_cat.nolyr.geojson', visible: false },
+			{ id: 'spc-outlook-day2-torn', url: 'https://www.spc.noaa.gov/products/outlook/day2otlk_torn.nolyr.geojson', visible: false },
+			{ id: 'spc-outlook-day2-hail', url: 'https://www.spc.noaa.gov/products/outlook/day2otlk_hail.nolyr.geojson', visible: false },
+			{ id: 'spc-outlook-day2-wind', url: 'https://www.spc.noaa.gov/products/outlook/day2otlk_wind.nolyr.geojson', visible: false },
+			{ id: 'spc-outlook-day3-cat', url: 'https://www.spc.noaa.gov/products/outlook/day3otlk_cat.nolyr.geojson', visible: false },
+			{ id: 'spc-outlook-day3-torn', url: 'https://www.spc.noaa.gov/products/outlook/day3otlk_torn.nolyr.geojson', visible: false },
+			{ id: 'spc-outlook-day3-hail', url: 'https://www.spc.noaa.gov/products/outlook/day3otlk_hail.nolyr.geojson', visible: false },
+			{ id: 'spc-outlook-day3-wind', url: 'https://www.spc.noaa.gov/products/outlook/day3otlk_wind.nolyr.geojson', visible: false }
 		];
 
-		layerInfo.forEach(info => {
+		layerInfo.forEach((info) => {
 			map.addSource(info.id, { type: 'geojson', data: info.url });
 
 			const lineLayerId = `${info.id}-line-layer`;
@@ -75,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
 					visibility: info.visible ? 'visible' : 'none'
 				}
 			});
-			
 
 			document.getElementById(`toggle-${info.id}`).addEventListener('click', () => {
 				toggleLayerVisibility([lineLayerId, fillLayerId, labelLayerId]);
@@ -84,8 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	function toggleLayerVisibility(layerIds) {
-		map.getStyle().layers.forEach(layer => {
-			if (layer.id.startsWith('spc-outlook-day1')) {
+		map.getStyle().layers.forEach((layer) => {
+			if (layer.id.startsWith('spc-outlook-day')) {
 				const visibility = layerIds.includes(layer.id) ? 'visible' : 'none';
 				map.setLayoutProperty(layer.id, 'visibility', visibility);
 			}

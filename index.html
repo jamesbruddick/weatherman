@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="expires" content="0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
     <title>Weatherman</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/3.5.2/mapbox-gl.min.css" integrity="sha512-bO5qtUO8dOCnH8R2KGwkBv0OslCpuOWrMZtMXRxqCgMRzo3w5OmebZZBfr3jhfHKTcnHgEfQhAaTVdyQhoP+pw==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="index.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+      integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+      integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/3.7.0/mapbox-gl.min.css"
+      integrity="sha512-9RAPfS3YMZi1yEe+yT65HNwrqhOw++yaDYFxElkl141OBieVWznObzeAYNijFmvVe97u9Oh5oNXyTZTZD04iGQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
     <button id="mapmenu-open" class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#mapmenu">
@@ -24,15 +42,73 @@
         </button>
       </div>
       <div class="offcanvas-body">
-        <button id="toggle-spc-outlook-day1-cat" class="btn btn-dark mb-1" type="button">SPC Day 1 Categorical Outlook</button>
-        <button id="toggle-spc-outlook-day1-torn" class="btn btn-dark mb-1" type="button">SPC Day 1 Tornado Outlook</button>
-        <button id="toggle-spc-outlook-day1-hail" class="btn btn-dark mb-1" type="button">SPC Day 1 Hail Outlook</button>
-        <button id="toggle-spc-outlook-day1-wind" class="btn btn-dark mb-1" type="button">SPC Day 1 Wind Outlook</button>
+        <div class="card text-bg-dark shadow-lg rounded-3 mb-1">
+          <div class="card-header text-center pb-0">SPC Categorical Outlook</div>
+          <div class="card-body text-center p-2">
+            <div class="btn-group btn-group-toggle" role="group" aria-label="SPC Outlook Days">
+              <input id="toggle-spc-outlook-day1-cat" class="btn-check" type="radio" name="spc-outlook" autocomplete="off" checked />
+              <label class="btn btn-outline-light px-3 py-2" for="toggle-spc-outlook-day1-cat">Day 1</label>
+              <input id="toggle-spc-outlook-day2-cat" class="btn-check" type="radio" name="spc-outlook" autocomplete="off" />
+              <label class="btn btn-outline-light px-3 py-2" for="toggle-spc-outlook-day2-cat">Day 2</label>
+              <input id="toggle-spc-outlook-day3-cat" class="btn-check" type="radio" name="spc-outlook" autocomplete="off" />
+              <label class="btn btn-outline-light px-3 py-2" for="toggle-spc-outlook-day3-cat">Day 3</label>
+            </div>
+          </div>
+        </div>
+        <div class="card text-bg-dark shadow-lg rounded-3 mb-1">
+          <div class="card-header text-center pb-0">SPC Tornado Outlook</div>
+          <div class="card-body text-center p-2">
+            <div class="btn-group btn-group-toggle" role="group" aria-label="SPC Outlook Days">
+              <input id="toggle-spc-outlook-day1-torn" class="btn-check" type="radio" name="spc-outlook" autocomplete="off" />
+              <label class="btn btn-outline-light px-3 py-2" for="toggle-spc-outlook-day1-torn">Day 1</label>
+              <input id="toggle-spc-outlook-day2-torn" class="btn-check" type="radio" name="spc-outlook" autocomplete="off" />
+              <label class="btn btn-outline-light px-3 py-2" for="toggle-spc-outlook-day2-torn">Day 2</label>
+              <input id="toggle-spc-outlook-day3-torn" class="btn-check" type="radio" name="spc-outlook" autocomplete="off" />
+              <label class="btn btn-outline-light px-3 py-2" for="toggle-spc-outlook-day3-torn">Day 3</label>
+            </div>
+          </div>
+        </div>
+        <div class="card text-bg-dark shadow-lg rounded-3 mb-1">
+          <div class="card-header text-center pb-0">SPC Hail Outlook</div>
+          <div class="card-body text-center p-2">
+            <div class="btn-group btn-group-toggle" role="group" aria-label="SPC Outlook Days">
+              <input id="toggle-spc-outlook-day1-hail" class="btn-check" type="radio" name="spc-outlook" autocomplete="off" />
+              <label class="btn btn-outline-light px-3 py-2" for="toggle-spc-outlook-day1-hail">Day 1</label>
+              <input id="toggle-spc-outlook-day2-hail" class="btn-check" type="radio" name="spc-outlook" autocomplete="off" />
+              <label class="btn btn-outline-light px-3 py-2" for="toggle-spc-outlook-day2-hail">Day 2</label>
+              <input id="toggle-spc-outlook-day3-hail" class="btn-check" type="radio" name="spc-outlook" autocomplete="off" />
+              <label class="btn btn-outline-light px-3 py-2" for="toggle-spc-outlook-day3-hail">Day 3</label>
+            </div>
+          </div>
+        </div>
+        <div class="card text-bg-dark shadow-lg rounded-3 mb-1">
+          <div class="card-header text-center pb-0">SPC Wind Outlook</div>
+          <div class="card-body text-center p-2">
+            <div class="btn-group btn-group-toggle" role="group" aria-label="SPC Outlook Days">
+              <input id="toggle-spc-outlook-day1-wind" class="btn-check" type="radio" name="spc-outlook" autocomplete="off" />
+              <label class="btn btn-outline-light px-3 py-2" for="toggle-spc-outlook-day1-wind">Day 1</label>
+              <input id="toggle-spc-outlook-day2-wind" class="btn-check" type="radio" name="spc-outlook" autocomplete="off" />
+              <label class="btn btn-outline-light px-3 py-2" for="toggle-spc-outlook-day2-wind">Day 2</label>
+              <input id="toggle-spc-outlook-day3-wind" class="btn-check" type="radio" name="spc-outlook" autocomplete="off" />
+              <label class="btn btn-outline-light px-3 py-2" for="toggle-spc-outlook-day3-wind">Day 3</label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div id="map"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/3.5.2/mapbox-gl.min.js" integrity="sha512-30mpP4ZgPT5gePD6aO3SHRIcgS0UqGrNv8vxtTjl4Q9dVai8AOkIhSsYROYM/yS1vYoKfeX0MbI85AovQhpkHg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
+      integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/3.7.0/mapbox-gl.min.js"
+      integrity="sha512-2tT7DuFqwdbKS21GlGUCmKWKyVwyDvA8T7pw3QgNvJLbpqbNzOxXpzlHfkZPUw8cGb/GcJs23xqIF8hhWEq9ag=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script src="index.js"></script>
   </body>
 </html>
